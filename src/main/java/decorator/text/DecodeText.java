@@ -12,7 +12,7 @@ public class DecodeText implements IDecodeText {
     public HashMap<String, String> decodeText(HashMap<String, String> text) {
         HashMap<String, String> result = new HashMap<>();
         for (Map.Entry<String, String> textEntry : text.entrySet()) {
-            if (!textEntry.getValue().equals("")) {
+            if (textEntry.getValue().equals("")) {
                 result.put(textEntry.getKey(), "########");
                 System.out.println(textEntry.getKey() + " c парамметром " + result.get(textEntry));
             }

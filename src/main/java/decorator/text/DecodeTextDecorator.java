@@ -15,14 +15,12 @@ public class DecodeTextDecorator implements IDecodeText {
 
     @Override
     public HashMap<String, String> decodeText(HashMap<String, String> text) {
-        text = beforeDecodeTextByLogin(text);
-        return iDecodeText.decodeText(text);
+        return iDecodeText.decodeText(beforeDecodeTextByLogin(text));
     }
 
     @Override
     public HashMap<String, String> unCodeText(HashMap<String, String> text) {
-        text = beforeUnCodeTextByLogin(text);
-        return iDecodeText.decodeText(text);
+        return iDecodeText.decodeText(beforeUnCodeTextByLogin(text));
     }
 
     protected HashMap<String, String> beforeDecodeTextByLogin(HashMap<String, String> text) {
@@ -30,6 +28,8 @@ public class DecodeTextDecorator implements IDecodeText {
         for (Map.Entry<String, String> textEntry : text.entrySet()) {
             if (textEntry.getValue().equals("") && textEntry.getKey().contains("Login:=")) {
                 result.put(textEntry.getKey(), "########");
+            } else {
+                result.put(textEntry.getKey(), "");
             }
         }
         return result;
@@ -40,6 +40,8 @@ public class DecodeTextDecorator implements IDecodeText {
         for (Map.Entry<String, String> textEntry : text.entrySet()) {
             if (!textEntry.getValue().equals("########") && textEntry.getKey().contains("Login:=")) {
                 result.put(textEntry.getKey(), "");
+            } else {
+                result.put(textEntry.getKey(), "########");
             }
         }
         return result;
