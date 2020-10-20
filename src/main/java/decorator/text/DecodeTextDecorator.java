@@ -20,7 +20,7 @@ public class DecodeTextDecorator implements IDecodeText {
 
     @Override
     public HashMap<String, String> unCodeText(HashMap<String, String> text) {
-        return iDecodeText.decodeText(beforeUnCodeTextByLogin(text));
+        return iDecodeText.unCodeText(beforeUnCodeTextByLogin(text));
     }
 
     protected HashMap<String, String> beforeDecodeTextByLogin(HashMap<String, String> text) {
