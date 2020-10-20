@@ -54,6 +54,12 @@ public class Email {
             this.to = to;
         }
 
+        public CopyBuilder addTo(String to) {
+            this.to.addAll(Stream.of(to.split(","))
+                    .collect(Collectors.toList()));
+            return new CopyBuilder(subject, from, this.to);
+        }
+
         public ContextBuilder addCopy(String copy) {
             List<String> listCopy = Stream.of(copy.split(","))
                     .collect(Collectors.toList());
