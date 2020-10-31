@@ -1,11 +1,8 @@
 package decorator;
 
-import decorator.text.DecodeText;
-import decorator.text.DecodeTextDecorator;
-import decorator.text.IDecodeText;
-import decorator.text.LoggerDecorator;
+import decorator.text.Message;
 
-import java.util.HashMap;
+import java.util.AbstractMap;
 import java.util.Map;
 
 /**
@@ -13,35 +10,29 @@ import java.util.Map;
  */
 public class Main {
     public static void main(String[] args) {
-        IDecodeText iDecodeText = new DecodeText();
-        iDecodeText = new DecodeTextDecorator(iDecodeText);
-        iDecodeText = new LoggerDecorator(iDecodeText);
-
+        Message message = new Message();
+        message.setSender(Map.ofEntries(new AbstractMap.SimpleEntry<String, String>("Login:=Sveta", "")));
+        message.setAddressee(Map.ofEntries(new AbstractMap.SimpleEntry<String, String>("Login:=Luda", "")));
+        message.setText(Map.ofEntries(new AbstractMap.SimpleEntry<String, String>("Hello sweety", "")));
+        /**TODO:  я не могу корректно собрать в цепочку для проверки.
+         * хотя я вроде делаю все верно. Прошу подсказать, где я нарушил логику.
+         */
+//        IDecodeText iDecodeText =
+//
+//        Message resultSend = new WorkWithMessage(message).sendMessage(new LoggerDecorator())
         /**
          * кодирование
          */
-        HashMap<String, String> input = new HashMap<>();
-
-        input.put("Login:=Sveta", "");
-        input.put("Hello sweety", "");
-
-
-        HashMap<String, String> result1 = iDecodeText.decodeText(input);
-        for (Map.Entry<String, String> entry: result1.entrySet()){
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-
-
         /**
          * декодирвоание
          */
-        HashMap<String, String> output = new HashMap<>();
-        output.put("Login:=Luda", "########");
-        output.put("And you hello", "########");
-        HashMap<String, String> result2 = iDecodeText.unCodeText(output);
-        for (Map.Entry<String, String> entry: result2.entrySet()){
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-
+//        HashMap<String, String> output = new HashMap<>();
+//        output.put("Login:=Luda", "########");
+//        output.put("And you hello", "########");
+//        HashMap<String, String> result2 = iDecodeText.unCodeMessage(output);
+//        for (Map.Entry<String, String> entry: result2.entrySet()){
+//            System.out.println(entry.getKey() + " " + entry.getValue());
+//        }
+//
     }
 }

@@ -7,23 +7,36 @@ import java.util.Map;
  * @author nemykin 19.10.2020
  */
 public class DecodeTextDecorator implements IDecodeText {
-    protected IDecodeText iDecodeText;
 
-    public DecodeTextDecorator(IDecodeText iDecodeText) {
-        this.iDecodeText = iDecodeText;
+    private Message message;
+
+    public DecodeTextDecorator( Message message) {
+        this.message = message;
     }
 
     @Override
-    public HashMap<String, String> decodeText(HashMap<String, String> text) {
-        return iDecodeText.decodeText(beforeDecodeTextByLogin(text));
+    public Message decodeMessage(Message message) {
+        this.message.setSender(decodeText(message.getSender()));
+        this.message.setText(decodeText(message.getText()));
+        this.message.setAddressee(decodeText(message.getAddressee()));
+        return this.message;
     }
 
     @Override
-    public HashMap<String, String> unCodeText(HashMap<String, String> text) {
-        return iDecodeText.unCodeText(beforeUnCodeTextByLogin(text));
+    public Message unCodeMessage(Message message) {
+        this.message.setSender(unCodeText(message.getSender()));
+        this.message.setText(unCodeText(message.getText()));
+        this.message.setAddressee(unCodeText(message.getAddressee()));
+        return this.message;
     }
 
-    protected HashMap<String, String> beforeDecodeTextByLogin(HashMap<String, String> text) {
+    /**
+     * вспомогательный метод для кодирования 1 элемента
+     *
+     * @param text
+     * @return
+     */
+    private Map<String, String> decodeText(Map<String, String> text) {
         HashMap<String, String> result = new HashMap<>();
         for (Map.Entry<String, String> textEntry : text.entrySet()) {
             if (textEntry.getValue().equals("") && textEntry.getKey().contains("Login:=")) {
@@ -35,7 +48,13 @@ public class DecodeTextDecorator implements IDecodeText {
         return result;
     }
 
-    protected HashMap<String, String> beforeUnCodeTextByLogin(HashMap<String, String> text) {
+    /**
+     * вспомогательный метод для декодирования 1 элемента
+     *
+     * @param text
+     * @return
+     */
+    private Map<String, String> unCodeText(Map<String, String> text) {
         HashMap<String, String> result = new HashMap<>();
         for (Map.Entry<String, String> textEntry : text.entrySet()) {
             if (!textEntry.getValue().equals("########") && textEntry.getKey().contains("Login:=")) {
@@ -46,4 +65,5 @@ public class DecodeTextDecorator implements IDecodeText {
         }
         return result;
     }
+
 }

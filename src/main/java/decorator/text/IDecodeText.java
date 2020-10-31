@@ -8,18 +8,18 @@ import java.util.HashMap;
 public interface IDecodeText {
 
     /**
-     *
-     * @param text
+     * кодирование сообщений
+     * @param message
      * @return
      */
-    HashMap<String, String> decodeText(HashMap<String, String> text);
+    Message decodeMessage(Message message);
 
     /**
-     *
-     * @param text
+     * декодирование сообщений
+     * @param message
      * @return
      */
-    HashMap<String, String> unCodeText(HashMap<String, String> text);
+    Message unCodeMessage(Message message);
 
 
 }
