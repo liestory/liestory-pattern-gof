@@ -9,11 +9,11 @@ import java.util.stream.Stream;
  */
 public class Email {
 
-    public FromBuilder addSubject(String subject) {
+    public IFromBuilder addSubject(String subject) {
         return new FromBuilder(subject);
     }
 
-    public static class FromBuilder {
+    private class FromBuilder implements IFromBuilder {
         private String subject;
 
         public FromBuilder(String subject) {
@@ -21,12 +21,12 @@ public class Email {
 
         }
 
-        public ToBuilder addFrom(String from) {
+        public IToBuilder addFrom(String from) {
             return new ToBuilder(subject, from);
         }
     }
 
-    public static class ToBuilder {
+    private static class ToBuilder implements IToBuilder {
         private String subject;
         private String from;
 
@@ -36,14 +36,14 @@ public class Email {
 
         }
 
-        public CopyBuilder addTo(String to) {
+        public ICopyBuilder addTo(String to) {
             List<String> listTo = Stream.of(to.split(","))
                     .collect(Collectors.toList());
             return new CopyBuilder(subject, from, listTo);
         }
     }
 
-    public static class CopyBuilder {
+    private static class CopyBuilder implements ICopyBuilder {
         private String subject;
         private String from;
         private List<String> to;
@@ -60,14 +60,14 @@ public class Email {
             return new CopyBuilder(subject, from, this.to);
         }
 
-        public ContextBuilder addCopy(String copy) {
+        public IContextBuilder addCopy(String copy) {
             List<String> listCopy = Stream.of(copy.split(","))
                     .collect(Collectors.toList());
             return new ContextBuilder(subject, from, to, listCopy);
         }
     }
 
-    public static class ContextBuilder {
+    private static class ContextBuilder implements IContextBuilder {
         private String subject;
         private String from;
         private List<String> to;
@@ -80,13 +80,13 @@ public class Email {
             this.copy = copy;
         }
 
-        public EmailBuilder addContext(String body, String signature) {
+        public IEmailBuilder addContext(String body, String signature) {
             return new EmailBuilder(subject, from, to, copy, body, signature);
         }
 
     }
 
-    public static class EmailBuilder {
+    private static class EmailBuilder implements IEmailBuilder {
         private String subject;
         private String from;
         private List<String> to;
@@ -114,4 +114,25 @@ public class Email {
         }
     }
 
+    public interface IFromBuilder {
+        IToBuilder addFrom(String from);
+    }
+
+    public interface IToBuilder {
+        ICopyBuilder addTo(String to);
+    }
+
+    public interface ICopyBuilder {
+        ICopyBuilder addTo(String to);
+
+        IContextBuilder addCopy(String copy);
+    }
+
+    public interface IContextBuilder {
+        IEmailBuilder addContext(String body, String signature);
+    }
+
+    public interface IEmailBuilder {
+        String build();
+    }
 }
