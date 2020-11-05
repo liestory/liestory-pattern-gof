@@ -11,7 +11,7 @@ public interface IFirstOrm<T extends IDbEntity> {
 
     void create(T entity);
 
-    T read(int id);
+    T read(Long id);
 
     void update(T entity);
 

@@ -2,6 +2,8 @@ package adapter.home.adapter;
 
 import adapter.home.DbUserEntity;
 import adapter.home.DbUserInfoEntity;
+import adapter.home.orm.first.IFirstOrm;
+import adapter.home.orm.second.ISecondOrm;
 
 /**
  * @author nemykin 31.10.2020
@@ -10,74 +12,55 @@ public class TargetAdapterImpl implements TargetAdapter {
 
     private DbUserEntity dbUserEntity;
     private DbUserInfoEntity dbUserInfoEntity;
+    private IFirstOrm iFirstOrm;
+    private ISecondOrm iSecondOrm;
 
-    public TargetAdapterImpl(DbUserEntity dbUserEntity, DbUserInfoEntity dbUserInfoEntity) {
-        this.dbUserEntity = dbUserEntity;
-        this.dbUserInfoEntity = dbUserInfoEntity;
+    public TargetAdapterImpl(IFirstOrm iFirstOrm, ISecondOrm iSecondOrm) {
+        this.iFirstOrm = iFirstOrm;
+        this.iSecondOrm = iSecondOrm;
     }
 
     @Override
     public void createUser(DbUserEntity entity) {
-        dbUserEntity.setId(entity.getId());
-        dbUserEntity.setLogin(entity.getLogin());
-        dbUserEntity.setPassword(entity.getPassword());
-        dbUserEntity.setUserInfoId(entity.getUserInfoId());
+        iFirstOrm.create(entity);
+        iSecondOrm.getContext().getUsers();
     }
 
     @Override
     public DbUserEntity readUser(Long id) {
-        if (dbUserEntity.getId() == id) {
-            return dbUserEntity;
-        }
-        return null;
+        return (DbUserEntity) iFirstOrm.read(id);
     }
 
     @Override
     public void updateUser(DbUserEntity entity) {
-        dbUserEntity.setId(entity.getId());
-        dbUserEntity.setLogin(entity.getLogin());
-        dbUserEntity.setPassword(entity.getPassword());
-        dbUserEntity.setUserInfoId(entity.getUserInfoId());
+        iFirstOrm.update(entity);
+        iSecondOrm.getContext().getUsers();
     }
 
     @Override
     public void deleteUser(DbUserEntity entity) {
-        if (dbUserEntity.equals(entity)) {
-            dbUserEntity.setId(null);
-            dbUserEntity.setLogin(null);
-            dbUserEntity.setPassword(null);
-            dbUserEntity.setUserInfoId(null);
-        }
+        iFirstOrm.delete(entity);
     }
 
     @Override
     public void createUserInfo(DbUserInfoEntity entity) {
-        dbUserInfoEntity.setId(entity.getId());
-        dbUserInfoEntity.setName(entity.getName());
-        dbUserInfoEntity.setBirthday(entity.getBirthday());
+        iFirstOrm.create(entity);
+        iSecondOrm.getContext().getUserInfos();
     }
 
     @Override
     public DbUserInfoEntity readUserInfo(Long id) {
-        if (dbUserInfoEntity.getId() == id) {
-            return dbUserInfoEntity;
-        }
-        return null;
+        return (DbUserInfoEntity) iFirstOrm.read(id);
     }
 
     @Override
     public void updateUserInfo(DbUserInfoEntity entity) {
-        dbUserInfoEntity.setId(entity.getId());
-        dbUserInfoEntity.setName(entity.getName());
-        dbUserInfoEntity.setBirthday(entity.getBirthday());
+        iFirstOrm.update(entity);
+        iSecondOrm.getContext().getUserInfos();
     }
 
     @Override
     public void deleteUserInfo(DbUserInfoEntity entity) {
-        if (dbUserInfoEntity.equals(entity)) {
-            dbUserInfoEntity.setId(null);
-            dbUserInfoEntity.setName(null);
-            dbUserInfoEntity.setBirthday(null);
-        }
+        iFirstOrm.delete(entity);
     }
 }
