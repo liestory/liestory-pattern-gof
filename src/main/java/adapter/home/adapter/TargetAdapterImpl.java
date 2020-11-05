@@ -10,8 +10,6 @@ import adapter.home.orm.second.ISecondOrm;
  */
 public class TargetAdapterImpl implements TargetAdapter {
 
-    private DbUserEntity dbUserEntity;
-    private DbUserInfoEntity dbUserInfoEntity;
     private IFirstOrm iFirstOrm;
     private ISecondOrm iSecondOrm;
 
@@ -23,18 +21,20 @@ public class TargetAdapterImpl implements TargetAdapter {
     @Override
     public void createUser(DbUserEntity entity) {
         iFirstOrm.create(entity);
-        iSecondOrm.getContext().getUsers();
     }
 
     @Override
     public DbUserEntity readUser(Long id) {
-        return (DbUserEntity) iFirstOrm.read(id);
+        for (DbUserEntity dbUserInfoEntity : iSecondOrm.getContext().getUsers()) {
+            if (dbUserInfoEntity == iFirstOrm.read(id))
+                return dbUserInfoEntity;
+        }
+        return null;
     }
 
     @Override
     public void updateUser(DbUserEntity entity) {
         iFirstOrm.update(entity);
-        iSecondOrm.getContext().getUsers();
     }
 
     @Override
@@ -45,18 +45,20 @@ public class TargetAdapterImpl implements TargetAdapter {
     @Override
     public void createUserInfo(DbUserInfoEntity entity) {
         iFirstOrm.create(entity);
-        iSecondOrm.getContext().getUserInfos();
     }
 
     @Override
     public DbUserInfoEntity readUserInfo(Long id) {
-        return (DbUserInfoEntity) iFirstOrm.read(id);
+        for (DbUserInfoEntity dbUserInfoEntity : iSecondOrm.getContext().getUserInfos()) {
+            if (dbUserInfoEntity == iFirstOrm.read(id))
+                return dbUserInfoEntity;
+        }
+        return null;
     }
 
     @Override
     public void updateUserInfo(DbUserInfoEntity entity) {
         iFirstOrm.update(entity);
-        iSecondOrm.getContext().getUserInfos();
     }
 
     @Override
