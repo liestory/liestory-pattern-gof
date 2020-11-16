@@ -1,14 +1,13 @@
 package state;
 
 /**
- * @author nemykin 15.11.2020
+ * @author nemykin 16.11.2020
  */
-public class InitState extends StateBase {
+public class ChooseDocumentState extends StateBase {
 
     @Override
     public void depositMoney(PrintContext context) {
-        System.out.println("Внесено денег  " + context.money);
-        context.state = new ChooseDiskState();
+        throw new RuntimeException("Workflow is wrong");
     }
 
     @Override
@@ -18,7 +17,8 @@ public class InitState extends StateBase {
 
     @Override
     public String chooseDocument(PrintContext printContext) {
-        throw new RuntimeException("Workflow is wrong");
+        System.out.println("Выбран документ " + printContext.document);
+        return printContext.document;
     }
 
     @Override

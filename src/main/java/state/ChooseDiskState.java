@@ -3,17 +3,16 @@ package state;
 /**
  * @author nemykin 15.11.2020
  */
-public class InitState extends StateBase {
+public class ChooseDiskState extends StateBase {
 
     @Override
     public void depositMoney(PrintContext context) {
-        System.out.println("Внесено денег  " + context.money);
-        context.state = new ChooseDiskState();
     }
 
     @Override
     public String chooseDisk(PrintContext printContext) {
-        throw new RuntimeException("Workflow is wrong");
+        System.out.println("выбран диск " + printContext.disk);
+        return printContext.disk;
     }
 
     @Override

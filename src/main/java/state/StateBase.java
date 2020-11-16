@@ -21,7 +21,8 @@ public abstract class StateBase implements State {
     public abstract void endPrint(PrintContext printContext);
 
     @Override
-    public int withdrawMoney(PrintContext printContext) {
-        return 0;
+    public void withdrawMoney(PrintContext printContext) {
+        printContext.money = printContext.money - (printContext.countPrint * PrintContext.COST_PAGE);
+        System.out.println("Деньги возвращены " + printContext.money);
     }
 }

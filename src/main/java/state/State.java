@@ -15,5 +15,5 @@ public interface State {
 
     void endPrint(PrintContext printContext);
 
-    int withdrawMoney(PrintContext printContext);
+    void withdrawMoney(PrintContext printContext);
 }
