@@ -10,7 +10,7 @@ import java.util.List;
  */
 public enum CurrencyType {
     EUR(Arrays.asList(100, 50, 10)),
-    USD(Arrays.asList(10)),
+    USD(Arrays.asList(100, 50, 25, 10)),
     RUB(Arrays.asList(5000, 2000, 1000, 500, 200, 100));
 
     List<Integer> denominationBanknotesList;

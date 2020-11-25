@@ -19,6 +19,16 @@ public abstract class RubleHandlerBase extends BanknoteHandler {
         return super.validate(banknote, type);
     }
 
+    @Override
+    public String getCash(String banknote, CurrencyType type) {
+        int deposit = Integer.parseInt(banknote);
+        if (deposit > getValue()) {
+            System.out.println("Выдаем купюру " + getValue() + " " + type.name());
+            return String.valueOf(deposit - getValue());
+        }
+        return super.getCash(banknote, type);
+    }
+
     protected abstract int getValue();
 
     protected abstract CurrencyType currencyType();

@@ -22,16 +22,16 @@ public class Bancomat {
 
     public Bancomat() {
         // доллары
-        handler = new HundredDollarHandler(handler);
-        handler = new FiftyDollarHandler(handler);
         handler = new TenDollarHandler(handler);
+        handler = new FiftyDollarHandler(handler);
+        handler = new HundredDollarHandler(handler);
         //рубли
-        handler = new FiveThousandRubleHandler(handler);
-        handler = new TwoThousandRubleHandler(handler);
+        handler = new HundredRubleHandler(handler);
+        handler = new TwoHundredRubleHandler(handler);
         handler = new ThousandRubleHandler(handler);
         handler = new FiveHundredRubleHandler(handler);
-        handler = new TwoHundredRubleHandler(handler);
-        handler = new HundredRubleHandler(handler);
+        handler = new TwoThousandRubleHandler(handler);
+        handler = new FiveThousandRubleHandler(handler);
 
     }
 
@@ -39,4 +39,7 @@ public class Bancomat {
         return handler.validate(banknote, type);
     }
 
+    public String getCash(String banknote, CurrencyType type) {
+        return handler.getCash(banknote, type);
+    }
 }
