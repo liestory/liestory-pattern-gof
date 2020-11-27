@@ -1,6 +1,8 @@
 package decorator;
 
 import decorator.text.Message;
+import decorator.text.WorkWithMessageWithCrypte;
+import decorator.text.WothWithMessageClear;
 
 import java.util.AbstractMap;
 import java.util.Map;
@@ -14,25 +16,13 @@ public class Main {
         message.setSender(Map.ofEntries(new AbstractMap.SimpleEntry<String, String>("Login:=Sveta", "")));
         message.setAddressee(Map.ofEntries(new AbstractMap.SimpleEntry<String, String>("Login:=Luda", "")));
         message.setText(Map.ofEntries(new AbstractMap.SimpleEntry<String, String>("Hello sweety", "")));
-        /**TODO:  я не могу корректно собрать в цепочку для проверки.
-         * хотя я вроде делаю все верно. Прошу подсказать, где я нарушил логику.
-         */
-//        IDecodeText iDecodeText =
-//
-//        Message resultSend = new WorkWithMessage(message).sendMessage(new LoggerDecorator())
-        /**
-         * кодирование
-         */
-        /**
-         * декодирвоание
-         */
-//        HashMap<String, String> output = new HashMap<>();
-//        output.put("Login:=Luda", "########");
-//        output.put("And you hello", "########");
-//        HashMap<String, String> result2 = iDecodeText.unCodeMessage(output);
-//        for (Map.Entry<String, String> entry: result2.entrySet()){
-//            System.out.println(entry.getKey() + " " + entry.getValue());
-//        }
-//
+        WothWithMessageClear wothWithMessageClear = new WothWithMessageClear(new WorkWithMessageWithCrypte());
+
+        Message result1;
+        result1 = wothWithMessageClear.getMessage(message);
+        System.out.println("result:= "+ result1.getText());
+        result1 = wothWithMessageClear.sendMessage(message);
+        System.out.println("result:= "+ result1.getText());
+
     }
 }

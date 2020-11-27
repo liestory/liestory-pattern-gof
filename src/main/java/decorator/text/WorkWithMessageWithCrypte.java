@@ -4,30 +4,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author nemykin 19.10.2020
+ * @author nemykin 28.11.2020
  */
-public class DecodeTextDecorator implements IDecodeText {
+public class WorkWithMessageWithCrypte implements WorkWithMessage {
 
-    private Message message;
-
-    public DecodeTextDecorator( Message message) {
-        this.message = message;
+    @Override
+    public Message sendMessage(Message message) {
+        System.out.println("Здесь отправлено crypto сообщение");
+        Message messageRes = new Message();
+        messageRes.setSender(decodeText(message.getSender()));
+        messageRes.setText(decodeText(message.getText()));
+        messageRes.setAddressee(decodeText(message.getAddressee()));
+        return messageRes;
     }
 
     @Override
-    public Message decodeMessage(Message message) {
-        this.message.setSender(decodeText(message.getSender()));
-        this.message.setText(decodeText(message.getText()));
-        this.message.setAddressee(decodeText(message.getAddressee()));
-        return this.message;
-    }
-
-    @Override
-    public Message unCodeMessage(Message message) {
-        this.message.setSender(unCodeText(message.getSender()));
-        this.message.setText(unCodeText(message.getText()));
-        this.message.setAddressee(unCodeText(message.getAddressee()));
-        return this.message;
+    public Message getMessage(Message message) {
+        System.out.println("Здесь получено crypto сообщение");
+        Message messageRes = new Message();
+        messageRes.setSender(unCodeText(message.getSender()));
+        messageRes.setText(unCodeText(message.getText()));
+        messageRes.setAddressee(unCodeText(message.getAddressee()));
+        return messageRes;
     }
 
     /**
@@ -65,5 +63,4 @@ public class DecodeTextDecorator implements IDecodeText {
         }
         return result;
     }
-
 }
