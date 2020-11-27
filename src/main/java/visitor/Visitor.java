@@ -3,11 +3,27 @@ package visitor;
 /**
  * @author nemykin 26.11.2020
  */
-public interface Visitor {
+public abstract class Visitor {
 
-    String visitRectangle(Rectangle rectangle);
+    private String operationName;
 
-    String visitTriangle(Triangle triangle);
+    protected Visitor(String operationName) {
+        this.operationName = operationName;
+    }
 
-    String visitCircle(Square square);
+
+    public abstract void visit(Rectangle rectangle, Integer x, Integer y);
+
+    public abstract void visit(Triangle triangle, Integer x, Integer y);
+
+    public abstract void visit(Square square, Integer x, Integer y);
+
+    public String getOperationName() {
+        return operationName;
+    }
+
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
+    }
+
 }

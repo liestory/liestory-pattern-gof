@@ -7,13 +7,17 @@ public class Main {
     public static void main(String[] args) {
         int x = 2;
         int y = 3;
-        Painter[] painters = {new Square(), new Triangle(), new Rectangle()};
-        for (Painter painter : painters) {
-            // сюда не должен попасть квадрат, тк проверку не пройдет.
-            // Но если исправить значение на равное, все увидим
-            painter.draw(x, y);
-            painter.getArea();
-            painter.getPerimetr();
+        VisitorPainter[] painters = {new Square("квадрат"),
+                new Triangle("треугольник"),
+                new Rectangle("прямоугольник")};
+        DrawVisitor drawVisitor = new DrawVisitor("рисовать");
+        AreaVisitor areaVisitor = new AreaVisitor("площадь");
+        PerimetrVisitor perimetrVisitor = new PerimetrVisitor("периметр");
+        for (VisitorPainter painter : painters) {
+            painter.accept(drawVisitor, x, y);
+            painter.accept(areaVisitor, x, y);
+            painter.accept(perimetrVisitor, x, y);
         }
+
     }
 }
