@@ -17,11 +17,11 @@ public class Main {
         // объявления
         Bancomat bancomat = new Bancomat();
         // depositRuble1
-        System.out.println("Выдаем сумму " + depositRuble1 + " " + CurrencyType.RUB);
-        System.out.println("Выдаем сумму " + depositRuble2 + " " + CurrencyType.RUB);
-        System.out.println("Выдаем сумму " + depositRuble3 + " " + CurrencyType.USD);
-        bancomat.validate(bancomat.getCash(depositRuble1, CurrencyType.RUB), CurrencyType.RUB);
-        bancomat.validate(bancomat.getCash(depositRuble2, CurrencyType.RUB), CurrencyType.RUB);
-        bancomat.validate(bancomat.getCash(depositRuble3, CurrencyType.USD), CurrencyType.USD);
+        System.out.println("Запрос суммы " + depositRuble1 + " " + CurrencyType.RUB);
+        bancomat.getCash(depositRuble1, CurrencyType.RUB);
+        System.out.println("Запрос суммы " + depositRuble2 + " " + CurrencyType.RUB);
+        bancomat.getCash(depositRuble2, CurrencyType.RUB);
+        System.out.println("Запрос суммы " + depositRuble3 + " " + CurrencyType.USD);
+        bancomat.getCash(depositRuble3, CurrencyType.USD);
     }
 }

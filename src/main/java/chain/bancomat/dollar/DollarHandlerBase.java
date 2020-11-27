@@ -24,11 +24,19 @@ public abstract class DollarHandlerBase extends BanknoteHandler {
     @Override
     public String getCash(String banknote, CurrencyType type) {
         int deposit = Integer.parseInt(banknote);
-        if (deposit > getValue()) {
+        while (deposit >= getValue() && validate(String.valueOf(getValue()), type)) {
             System.out.println("Выдаем купюру " + getValue() + " " + type.name());
-            return String.valueOf(deposit - getValue());
+            deposit = deposit - getValue();
         }
-        return super.getCash(banknote, type);
+        if (deposit > 0 && deposit < 10 && validate("10", type)) {
+            System.out.println("Не валидная сумма для выдачи");
+            return null;
+        }
+        if (deposit == 0) {
+            System.out.println("Валидная сумма для выдачи");
+            return null;
+        }
+        return super.getCash(String.valueOf(deposit), type);
     }
 
     protected abstract int getValue();
